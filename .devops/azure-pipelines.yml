@@ -1,0 +1,64 @@
+trigger:
+- main
+
+pool:
+  name: default
+
+jobs:
+- job: build
+  workspace:
+    clean: all
+  steps:
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'restore'
+      feedsToUse: 'select'
+  - task: VSBuild@1
+    inputs:
+      solution: '**\*.sln'
+      platform: 'Any CPU'
+      configuration: 'Release'
+      maximumCpuCount: true
+  - task: CopyFiles@2
+    displayName: 'Copy test build output to: $(build.artifactstagingdirectory)\tests'
+    inputs:
+      Contents: |
+        **\bin\Release\**
+      TargetFolder: '$(build.artifactstagingdirectory)\tests'
+      flattenFolders: true
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: testdrop'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)\tests'
+      ArtifactName: 'testdrop'
+      publishLocation: 'Container'
+- job: run_tests
+  dependsOn: build
+  strategy:
+    parallel: 5
+  workspace:
+    clean: all
+  steps:
+  - checkout: none
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Get tests'
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'testdrop'
+      itemPattern: '**'
+      downloadPath: '$(Build.BinariesDirectory)'
+  - task: VSTest@2
+    displayName: 'Run net48 tests'
+    inputs:
+      testSelector: 'testAssemblies'
+      testAssemblyVer2: '*Test*.dll'
+      searchFolder: '$(Build.BinariesDirectory)\testdrop'
+      testFiltercriteria: 'TestCategory!=Dummy'
+      runInParallel: true
+      codeCoverageEnabled: false
+      distributionBatchType: 'basedOnExecutionTime'
+      batchingBasedOnExecutionTimeOption: 'customTimeBatchSize'
+      customRunTimePerBatchValue: '480'
+      rerunFailedTests: true
+      rerunMaxAttempts: '5'

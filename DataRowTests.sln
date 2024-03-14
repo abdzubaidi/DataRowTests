@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataRowTests", "DataRowTests\DataRowTests.csproj", "{50DF31FD-6501-4358-9FA6-312792853E97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50DF31FD-6501-4358-9FA6-312792853E97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50DF31FD-6501-4358-9FA6-312792853E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50DF31FD-6501-4358-9FA6-312792853E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50DF31FD-6501-4358-9FA6-312792853E97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {48B8B821-E480-4FFA-AB4F-43FC79BE5DCE}
+	EndGlobalSection
+EndGlobal
