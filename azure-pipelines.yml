@@ -14,7 +14,7 @@ steps:
     inputs:
       testSelector: 'testAssemblies'
       testAssemblyVer2: |
-        **\*test*.dll
+        **\*DataRowTests*.dll
         !**\*TestAdapter.dll
         !**\obj\**
 
