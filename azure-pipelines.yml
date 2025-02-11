@@ -4,34 +4,16 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+- none
 
 pool:
   vmImage: ubuntu-latest
 
-  strategy:
-    parallel: 5
-  workspace:
-    clean: all
-  steps:
-    - checkout: none
-    - task: DownloadBuildArtifacts@0
-      inputs:
-        buildType: 'current'
-        downloadType: 'single'
-        artifactName: 'testdrop'
-        itemPattern: '**'
-        downloadPath: '$(Build.BinariesDirectory)'
-    - task: VSTest@2
-      inputs:
-        testSelector: 'testAssemblies'
-        testAssemblyVer2: 'My.*Test.dll'
-        searchFolder: '$(Build.BinariesDirectory)\testdrop'
-        testFiltercriteria: 'TestCategory!=Dummy'
-        runInParallel: true
-        codeCoverageEnabled: false
-        distributionBatchType: 'basedOnExecutionTime'
-        batchingBasedOnExecutionTimeOption: 'customTimeBatchSize'
-        customRunTimePerBatchValue: '480'
-        rerunFailedTests: true
-        rerunMaxAttempts: '5'
+steps:
+  - task: VSTest@2
+    inputs:
+      testSelector: 'testAssemblies'
+      testAssemblyVer2: |
+        **\*test*.dll
+        !**\*TestAdapter.dll
+        !**\obj\**
