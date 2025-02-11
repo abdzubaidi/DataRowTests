@@ -21,9 +21,9 @@ steps:
   - task: VSTest@2
     displayName: Run test suite $(Test.TestSuite)
     inputs:
-      testSelector: testPlan
-      testPlan: 97
-      testSuite: 98
+      testSelector: 'testPlan'
+      testPlan: '97'
+      testSuite: '98'
       testConfiguration: 'Windows 10'
       runInParallel: false
       runTestsInIsolation: false
